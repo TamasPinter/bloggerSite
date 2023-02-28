@@ -1,0 +1,17 @@
+<h1>Homepage</h1>
+
+{{#each blog}}
+<div class="card text-black my-3">
+    <div class="row card-header">
+        <div class="col-lg-6">
+            <h4 class="text-black"><a href='/blog/{{id}}'>{{title}}</a></h4>
+        </div>
+        <div class="col-lg-6">
+            <p> Posted by: {{user.name}} on {{format_date createdAt}}</p>p></p>
+        </div>
+    </div>
+    <div class="card-body">
+        <p class="card-text">{{content}}</p>
+    </div>
+</div>
+{{/each}}

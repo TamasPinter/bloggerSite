@@ -1,0 +1,17 @@
+<h1>Edit {{date.title}}</h1>
+
+<form class='editBlogForm'>
+
+    <label for="title">
+        Edit Post Title
+    </label>
+    <input name="title" type="text" class="editBlogTitle form-control" value="{{data.title}}"/>
+    <label for="content">
+        Edit Post Content
+    </label>
+    <textarea name="content" class="editBlogContent form-control" rows="10">{{data.content}}</textarea>
+
+    <button type="submit" class="editBlog">Submit</button>
+    </form>
+
+    <script src="../public/js/editBlog.js"></script>
