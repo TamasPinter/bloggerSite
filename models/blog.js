@@ -23,9 +23,10 @@ Blog.init(
     },
     {
         sequelize,
-        timestamps: false,
+        timestamps: true,
         freezeTableName: true,
-        modelName: 'blog',
+        underscored: true,
+        modelName: 'blog'
     }
 );
 

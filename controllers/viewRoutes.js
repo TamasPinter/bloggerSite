@@ -33,14 +33,14 @@ router.get('/dash', withAuth, async (req, res) => {
         let blogs = await Blog.findAll({
             include: [User],
             where: {
-                userId: req.session.userId
+                userId: req.session.user_id
             }
         })
 
         let sequelizeBlogs = blogs.map((blog) => {
             return {
                 ...blog.get({ plain: true }),
-                belongsToUser: req.session.userId === blog.userId
+                belongsToUser: req.session.user_id === blog.userId
             }
         });
 
