@@ -1,28 +1,34 @@
-const editBlog = document.querySelector('.editBlogForm');
-const content = document.querySelector('.editBlogContent');
-const title = document.querySelectore('.editBlogTitle');
+const editBlog = async (event) => {
+    event.preventDefault ();
+    const title = document.querySelector('#title').value;
+    const content = document.querySelector('#content').value.trim();
+    const id = event.target.getAttribute('data-id');
 
-editBlog.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const blogId = (window.location.pathname.split('/')[2]);
-
-    const blogData = {
-        title: title.value,
-        content: content.value,
-    };
-
-    fetch(`/api/blogs/${blogId}`, {
+    const response = await fetch(`/api/blogs/${id}`, {
         method: 'PUT',
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(blogData),
-    })
-    .then((response) => {
-        if (response.status === 200) {
-            window.location.href = '/dash';
+        body: JSON.stringify({ title, content }),
+        headers: { 'Content-Type': 'application/json' },
+    });
+    if (response.ok) {
+        document.location.replace('/dash');
+    } else {
+        alert('Failed to edit!');
+    }
+};
+
+const delHandler = async (event) => {
+    if (event.target.hasAttribute('data-id')) {
+        const id = event.target.getAttribute('data-id');
+        const response = await fetch(`/api/blogs/${id}`, {
+            method: 'DELETE',
+        });
+        if (response.ok) {
+            document.location.replace('/dash');
+        } else {
+            alert('Failed to delete!')
         }
-    })
-    .catch((err) => console.log(err));
-});
+    }
+};
+
+document.querySelector('#edit-blog-form').addEventListener('click', editBlog);
+document.querySelector('#delete-blog').addEventListener('click', delHandler);
