@@ -1,20 +1,37 @@
 const sequelize = require('../config/connection');
 const { Model, DataTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
 
-class Blog extends Model {}
+class Blog extends Model {
+    checkPassword(loginPw) {
+        return bcrypt.compaseSync(loginPw, this.password);
+    }
+}
 
 Blog.init(
     {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            allowNull: false,
+            autoIncrement: true,
+        },
         title: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING,
             allowNull: false
         },
         content: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING,
             allowNull: false
         },
-        userId: {
+        date_created: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        user_id: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             references: {
                 model: "user",
                 key: "id"
@@ -23,7 +40,7 @@ Blog.init(
     },
     {
         sequelize,
-        timestamps: true,
+        timestamps: false,
         freezeTableName: true,
         underscored: true,
         modelName: 'blog'

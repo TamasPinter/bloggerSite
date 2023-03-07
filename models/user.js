@@ -13,7 +13,7 @@ User.init(
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            allowNull: true,
+            allowNull: false,
             autoIncrement: true,
         },
         name: {
@@ -41,6 +41,10 @@ User.init(
             beforeCreate: async (newUserData) => {
                 newUserData.password = await bcrypt.hash(newUserData.password, 10);
                 return newUserData;
+            },
+            beforeUpdate: async (updatedUserData) => {
+                updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+                return updatedUserData;
             }
         },
 

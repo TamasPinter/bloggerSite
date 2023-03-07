@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const { Blog } = require('../../models');
+const withAuth = require('../../utils/auth');
 
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
     try {
         const newBlog = await Blog.create({
             ...req.body,
@@ -13,31 +14,35 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', withAuth, async (req, res) => {
     try {
-        const updateBlog = await Blog.update(req.body, {
+        const blogData = await Blog.update( {
+            
+                title: req.body.title,
+                content: req.body.content,  
+        },
+        {
             where: {
                 id: req.params.id,
-                userId: req.session.user_id,
             }
         });
-        if (updateBlog > 0) {
-            res.status(200).json(updateBlog);
-        } else {
-            res.status(404).send();
+        if (!blogData) {
+            res.status(404).json({ message: 'Failed to update!' });
+            return;
         }
+        res.status(200).json(blogData);
     } catch (err) {
         console.log(err);
-        res.status(400).json(err);
+        res.status(500).json(err);
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
     try {
         const blogData = await Blog.destroy({
             where: {
                 id: req.params.id,
-                userId: req.session.user_id,
+                user_id: req.session.user_id,
             },
         });
         if (!blogData) {
@@ -46,7 +51,7 @@ router.delete('/:id', async (req, res) => {
         }
         res.status(200).json(blogData);
     } catch (err) {
-        res.status(400).json(err);
+        res.status(500).json(err);
     }
 });
 
