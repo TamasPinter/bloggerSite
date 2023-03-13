@@ -1,17 +1,53 @@
-<h1>Edit {{date.title}}</h1>
+<div class="card-post">
+    <div class="card-hearder">
+        <div class="col align-self-start col-sm-4">
+            <span>by {{user.name}} on {{date_created}}</span>
+            <h3>{{title}}</h3>
+        </div>
+    </div>
+</div>
+<form class="comment">
+    <div class="body">
+        <div>
+            <h4>Edit Your Blog Content</h4>
+            <textarea id="content">{{this.content}}</textarea>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-success" id="update" data-id="{{this.id}}">Update</button>
+            <button class="btn btn-danger" id="delete" data-id="{{this.id}}">Delete</button>
 
-<form class='editBlogForm'>
+        </div>
+    </div>
+</form>
+<br>
+<div class="row mb-4 blog">
+    <h3>Comments</h3>
+    {{#each comments as |comment|}}
+    <div class="card-post">
+        <div class="card-head">
+            <span>by: {{user.name}} on {{date_created}}</span>
+            <h3><a class="card-title" href="/blog/{{id}}">{{title}}</a></h3>
+            <div class="col align-self-end">
+                <div class="col-md-10">
+                    <p>
+                        {{comment.content}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{#if logged_in}}
+<form class="comment">
+    <h2>Add a Comment</h2>
+    <div class="body">
+        <div>
+            <textarea name="comment-content" id="comment-content"></textarea>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success" id="comment">Add Comment</button>
+</form>
+{{/if}}
 
-    <label for="title">
-        Edit Post Title
-    </label>
-    <input name="title" type="text" class="editBlogTitle form-control" value="{{data.title}}"/>
-    <label for="content">
-        Edit Post Content
-    </label>
-    <textarea name="content" class="editBlogContent form-control" rows="10">{{data.content}}</textarea>
-
-    <button type="submit" class="editBlog">Submit</button>
-    </form>
-
-    <script src="../public/js/editBlog.js"></script>
+    <script src="./js/editBlog.js"></script>

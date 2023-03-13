@@ -1,0 +1,17 @@
+[
+    {
+      "dcontent": "NFTs will run the world, you'll see!",
+      "user_id": 2,
+      "blog_id": 1
+    },
+    {
+      "content": "I know, more and more devs are realizing how much time and money it can save!",
+      "user_id": 3,
+      "blog_id": 2
+    },    
+    {
+      "content": "It sure is scary out there, I warn my parents to be careful anywhere on the net!",
+      "user_id": 1,
+      "blog_id": 3
+    }
+  ]

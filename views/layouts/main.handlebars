@@ -36,10 +36,24 @@
     <h1 class="main-title d-flex justify-content-center">Blogger Site</h1>
   </nav>
   <main>
-    {{ body }}
+    {{{ body }}}
   </main>
   {{#if logged_in}}
-  <script src="/js/logout.js"></script>
+  <script>
+    const logout = async (event) => {
+    const response = await fetch('/api/users/logout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application'},
+    });
+    if (response.ok) {
+        document.location.replace('/');
+    } else {
+        alert('Failed to Log Out!');
+    }
+};
+
+document.querySelector('#logout').addEventListener('click', logout);
+  </script>
   {{/if}}
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
